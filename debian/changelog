@@ -1,3 +1,9 @@
+epics-seq (2.2.6-2) unstable; urgency=medium
+
+  * Bump up standards version
+
+ -- Martin Konrad <konrad@frib.msu.edu>  Mon, 15 Jul 2019 11:35:22 -0400
+
 epics-seq (2.2.6-1) unstable; urgency=medium
 
   * New upstream version 2.2.6
