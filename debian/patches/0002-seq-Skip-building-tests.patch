@@ -14,7 +14,7 @@ this package, or epics base.
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 45e89e1..ccf949b 100644
+index 0e29552..8c66038 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -6,8 +6,8 @@ DIRS += configure

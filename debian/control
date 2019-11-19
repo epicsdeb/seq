@@ -2,21 +2,21 @@ Source: epics-seq
 Section: admin
 Priority: optional
 Maintainer: Martin Konrad <konrad@frib.msu.edu>
-Build-Depends: debhelper (>= 9.20141010), dpkg-dev (>= 1.17.14),
+Build-Depends: debhelper (>= 10), dpkg-dev (>= 1.17.14),
                epics-debhelper (>= 8.14~), re2c (>= 0.9.9), epics-dev,
                rtems-epics-mvme2100 <pkg.epics-base.rtems>,
                rtems-epics-mvme3100 <pkg.epics-base.rtems>,
                rtems-epics-mvme5500 <pkg.epics-base.rtems>,
                rtems-epics-pc386 <pkg.epics-base.rtems>,
 XS-Rtems-Build-Depends: rtems-epics
-Standards-Version: 3.9.6
+Standards-Version: 4.3.0
 Homepage: http://www-csr.bessy.de/control/SoftDist/sequencer/
 Vcs-Git: https://github.com/epicsdeb/epics-seq.git
 Vcs-Browser: https://github.com/epicsdeb/epics-seq
 
 Package: epics-seq-dev
 Architecture: any
-Depends: libseq2.2.6 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}, ${epics:Depends},
+Depends: libseq2.2.7 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}, ${epics:Depends},
 Conflicts: epics-synapps, epics-synapps-dev,
 Description: State Notation Language and Sequencer
  The Experimental Physics and Industrial Control System is a collection of
@@ -28,7 +28,7 @@ Description: State Notation Language and Sequencer
  builds on EPICS base. This project defines SNL and provides an
  implementation, consisting of the SNL compiler and runtime system.
 
-Package: libseq2.2.6
+Package: libseq2.2.7
 Section: libs
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends},

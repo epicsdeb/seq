@@ -7,7 +7,7 @@ Subject: Skip building examples
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index ccf949b..9db1cec 100644
+index 8c66038..c571020 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -9,8 +9,8 @@ src_DEPEND_DIRS  = configure

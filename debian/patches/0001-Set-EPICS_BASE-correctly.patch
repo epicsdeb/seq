@@ -7,13 +7,15 @@ Subject: Set EPICS_BASE correctly
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/configure/RELEASE b/configure/RELEASE
-index aa9809b..067a1f2 100644
+index 1402405..698b5cd 100644
 --- a/configure/RELEASE
 +++ b/configure/RELEASE
-@@ -3,5 +3,5 @@
+@@ -3,7 +3,7 @@
  # You should do a "gnumake clean uninstall install" in the application
  # top directory each time changes are made to this file
  
 -EPICS_BASE=/home/franksen/src/epics-base/3-14-12-5
 +EPICS_BASE=/usr/lib/epics
+ 
+ # legacy support for synapps
  -include $(TOP)/../configure/EPICS_BASE.$(EPICS_HOST_ARCH)
