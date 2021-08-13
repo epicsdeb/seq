@@ -12,4 +12,5 @@ override_dh_install:
 	rm -f debian/tmp/usr/lib/epics/bin/linux-*/lemon
 	install -d debian/tmp/etc/epics/configure/rules.d
 	mv debian/tmp/usr/lib/epics/configure/RULES_BUILD debian/tmp/etc/epics/configure/rules.d/seqsnc.make
+	mv debian/tmp/usr/lib/epics/cfg/RULES_SNCSEQ debian/tmp/etc/epics/configure/rules.d/RULES_SNCSEQ
 	dh_install --fail-missing
