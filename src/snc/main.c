@@ -10,10 +10,13 @@ in the file LICENSE that is included with this distribution.
 /*************************************************************************\
                 Main program, reporting and printing procedures
 \*************************************************************************/
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
+
+#include "osiUnistd.h"
 
 #include "types.h"
 #include "parser.h"
@@ -26,9 +29,9 @@ in the file LICENSE that is included with this distribution.
 static Options options = DEFAULT_OPTIONS;
 
 static char *input_name;	/* input file name */
-static char *output_name;	/* c output file name */
+static char *output_name;	/* output file name */
 
-static FILE *out = NULL;	/* output file handle */
+static FILE *output_file;	/* output file handle */
 
 static int err_cnt;
 
@@ -41,38 +44,58 @@ static char *replace_extension(const char *in, const char *ext);
    command parameters. */
 int main(int argc, char *argv[])
 {
-	FILE	*in;
+	FILE	*input_file;
 	Program	*prg;
         Node    *exp;
 
 	/* Get command arguments */
 	parse_args(argc, argv);
 
-	in = fopen(input_name, "r");
-	if (in == NULL)
+	input_file = fopen(input_name, "r");
+	if (input_file == NULL)
 	{
-		perror(input_name);
-		return EXIT_FAILURE;
-	}
-	out = fopen(output_name, "w");
-	if (out == NULL)
-	{
-		perror(output_name);
+		report("error opening input file: %s: %s\n", input_name,
+			strerror(errno));
 		return EXIT_FAILURE;
 	}
 
 	/* the input file should be unbuffered,
            since the lexer maintains its own buffer */
-	setvbuf(in, NULL, _IONBF, 0);
+	setvbuf(input_file, NULL, _IONBF, 0);
 
-	exp = parse_program(in, input_name);
+	exp = parse_program(input_file, input_name);
 
         prg = analyse_program(exp, options);
 
-	if (err_cnt == 0)
-		generate_code(prg);
+	/* establish precondition for generate_code */
+	if (err_cnt > 0)
+		return EXIT_FAILURE;
 
-	return err_cnt ? EXIT_FAILURE : EXIT_SUCCESS;
+	output_file = fopen(output_name, "w");
+	if (output_file == NULL)
+	{
+		report("error opening output file: %s: %s\n", output_name,
+			strerror(errno));
+		return EXIT_FAILURE;
+	}
+
+	generate_code(prg);
+
+	if (fclose(output_file))
+	{
+		report("error closing output file: %s: %s\n", output_name,
+			strerror(errno));
+		err_cnt++;
+	}
+
+	if (err_cnt > 0)
+	{
+		if (unlink(output_name))
+			report("error removing partially written output file: %s: %s\n",
+				output_name, strerror(errno));
+		return EXIT_FAILURE;
+	}
+	return EXIT_SUCCESS;
 }
 
 /* Initialize options, input_name, and output_name from arguments. */
@@ -213,7 +236,7 @@ static void print_usage(void)
 void gen_line_marker_prim(int line_num, const char *src_file)
 {
 	if (options.line)
-		fprintf(out, "# line %d \"%s\"\n", line_num, src_file);
+		fprintf(output_file, "# line %d \"%s\"\n", line_num, src_file);
 }
 
 void gen_code(const char *format, ...)
@@ -221,7 +244,7 @@ void gen_code(const char *format, ...)
 	va_list args;
 
 	va_start(args, format);
-	vfprintf(out, format, args);
+	vfprintf(output_file, format, args);
 	va_end(args);
 }
 
