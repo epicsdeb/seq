@@ -1,8 +1,8 @@
 Source: epics-seq
 Section: admin
 Priority: optional
-Maintainer: John Priller <priller@frib.msu.edu>
-Build-Depends: debhelper (>= 10), dpkg-dev (>= 1.17.14),
+Maintainer: Evan Daykin <daykin@frib.msu.edu>
+Build-Depends: debhelper (>= 10), debhelper-compat (= 13), dpkg-dev (>= 1.17.14),
                epics-debhelper (>= 8.14~), re2c (>= 0.9.9), epics-dev,
                rtems-epics-mvme2100 <pkg.epics-base.rtems>,
                rtems-epics-mvme3100 <pkg.epics-base.rtems>,
